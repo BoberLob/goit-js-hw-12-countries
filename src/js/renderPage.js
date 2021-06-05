@@ -1,4 +1,4 @@
-const debounce = require('lodash.debounce');
+import debounse from 'lodash.debounce';
 
 import error from './pnotify';
 import { refs } from './refs';
@@ -13,7 +13,7 @@ refs.input.addEventListener(
 // Забираем значение с инпута 
 function handleGenerateListFromResponse(event) {
   let inputValue = event.target.value.trim();
-
+clearContent();
   if (!inputValue) {      
     error404();
     return;
@@ -31,7 +31,6 @@ function addFullCoutryInfo(country) {
 }
 
 function clearContent(){
-  refs.input.value = '';
   refs.inputMessage.innerHTML = '';
   refs.inputList.innerHTML = '';
   refs.countryContainer.innerHTML = '';  
@@ -42,12 +41,10 @@ function selectTypeOutputInfo(numberOfCountries) {
   console.log(numberOfCountries);
 
   if (numberOfCountries.length < 2) {
-    clearContent();
     addFullCoutryInfo(numberOfCountries);
   }
 
-  if(numberOfCountries.length >= 2 && numberOfCountries.length <= 10) {
-        clearContent();                    
+  if(numberOfCountries.length >= 2 && numberOfCountries.length <= 10) {                    
         numberOfCountries.forEach(country => {
             refs.inputList.insertAdjacentHTML('beforeend',`<li>${country.name}</li>`)
         });             
@@ -63,7 +60,6 @@ function selectTypeOutputInfo(numberOfCountries) {
     }
  
   if (numberOfCountries.length > 10) {
-    clearContent();
     const message = 'Найдено слишком много совпадений, уточните ваш запрос'
     refs.inputMessage.insertAdjacentHTML('beforeend', message);
     error({
@@ -81,7 +77,6 @@ function getCountriesList(value) {
 }
 
 function error404(err){
-  clearContent();
   const message = 'Не корректный запрос. Повторите попытку еще раз'
   refs.inputMessage.insertAdjacentHTML('beforeend', message);  
 }
